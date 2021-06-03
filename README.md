@@ -16,7 +16,7 @@ I've used the following third-parties:
 
  > *Click on the image below to go to the project demo.*
 
- > [![PASSENGER SATISFACTION - PROJECT DEMO](https://i.imgur.com/RgG1T2x.png)](https://www.youtube.com/watch?v=z_gGbkKiw0U&ab_channel=RelaxandCodeRelaxandCode)
+ > [![PASSENGER SATISFACTION - PROJECT DEMO](https://i.imgur.com/RgG1T2x.png)](https://youtu.be/z_gGbkKiw0U)
 
 ## Table of Contents
 
