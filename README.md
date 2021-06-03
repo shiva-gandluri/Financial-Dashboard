@@ -4,7 +4,7 @@
 
 
 
-Financial-Dashboard is a single-page web application that displays real-time stock market data of over 7700+ companies and foreign exchange currency details of 190+ countries in the world. It also includes currency converter tool that gets handy to convert currency from one country to another. These values get updated dynamically with new trends in the stock market. This serves the purpose as an excellent business tool to keep a track of stock price details of a company and factors that are affecting it. I have developed this web-application leveraging the full potential of [Bootstrap 4](http://getbootstrap.com/) and [Angular](https://angular.io/)
+Financial-Dashboard is a single-page web application that displays real-time stock market data of over 7700+ companies and foreign exchange currency details of 190+ countries in the world. It also includes a currency converter tool that gets handy to convert currency from one country to another. These values get updated dynamically with new trends in the stock market. This serves the purpose of an excellent business tool to keep a track of stock price details of a company and factors that are affecting it. I have developed this web-application leveraging the full potential of [Bootstrap 4](http://getbootstrap.com/) and [Angular](https://angular.io/)
 
 
 I've used the following third-parties:
