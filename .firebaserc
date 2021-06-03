@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "financial-dashboard-baa16": {
+      "hosting": {
+        "black-dashboard-angular": [
+          "financial-dashboard-baa16"
+        ]
+      }
+    }
+  }
+}

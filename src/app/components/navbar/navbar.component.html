@@ -1,0 +1,16 @@
+<div class="text-center">
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">Financial Dashboard</h3>
+        <nav class="nav nav-masthead justify-content-center">
+            <a class="{{ menuItem.class }} nav-link" *ngFor="let menuItem of menuItems" 
+            [routerLink]="[menuItem.path]" routerLinkActive="active" href="#">
+              <i class="tim-icons fa-fw {{ menuItem.icon }}" style="margin-right: 1rem;"></i> &emsp;
+              <span>{{ menuItem.title }}</span>
+            </a>
+        </nav>
+      </div>
+    </header>
+  </div>
+</div>

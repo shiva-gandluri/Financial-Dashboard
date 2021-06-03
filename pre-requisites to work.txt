@@ -1,0 +1,2 @@
+Chrome: 
+ - "enable cors" extension

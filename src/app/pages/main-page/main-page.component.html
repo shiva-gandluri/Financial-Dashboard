@@ -1,0 +1,363 @@
+
+<div class="content">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class=" card shadow">
+        <div class="search-bar">
+          <ng-template #rt let-r="result" let-t="term">
+            <!--<img [src]="'https://logo.clearbit.com/' + r['flag']" class="mr-3" style="width: 6px">-->
+            <ngb-highlight [result]="r.Name" [term]="t"></ngb-highlight>
+          </ng-template>
+          <form class="me-3">
+              <input type="search" [(ngModel)]="company_selected" name ="company_selected"
+              class="form-control" placeholder="&#xF002;   SEARCH" aria-label="Search" 
+              [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter">
+          </form>
+        </div> <!-- card body-->
+        </div> <!-- card-->
+        </div><!-- col-sm-12-->
+      </div><!-- row-->
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card shadow">
+            <div class=" card-header">
+              <h2 class="card-title">
+                {{ company_name_selected }}
+              </h2>
+            </div><!--card header-->
+            <div class = "card-body">
+              <p> {{ company_description.slice(0,950) }}
+                <span *ngIf="company_description.length > 950">
+                  ...
+
+                  <button type="button" class="badge badge-pill badge-light float-right" 
+                          (click) = "openShowMore(content)">
+                    show more
+                  </button>  
+
+                </span> 
+              </p>
+            </div> <!--card body-->
+          </div> <!--card-->
+        </div> <!--col-lg-6-->
+        <div class=" col-lg-6">
+          <div class=" card card-chart shadow">
+            <div class=" card-header">
+              <div class=" row"> 
+                <div class=" col-sm-6 text-left">
+                  <h4 class=" card-title">
+                    <i class=" tim-icons icon-coins text-danger-states"> 
+                    </i> 
+                    Stock Prices
+                  </h4>
+                </div>
+                <div class=" col-sm-6">
+                  <div class=" btn-group btn-group-toggle float-right" data-toggle="buttons">
+                    <label class=" btn btn-sm mr-3 btn-info btn-simple btn-rounded" 
+                    (click)="num_days = 7;updateOptions();clicked=true;clicked1=false;clicked2=false" 
+                    [ngClass]="{'active':clicked===true}"> 
+                      <input checked="checked" name="options" type="radio"/>
+                      <span> 7D </span>
+                    </label>
+                    <label class="btn btn-sm mr-3 btn-info btn-simple btn-rounded" 
+                    (click)="num_days = 30;updateOptions();clicked=false;clicked1=true;clicked2=false" 
+                    [ngClass]="{'active':clicked1===true}"> 
+                      <input name="options" type="radio" />
+                      <span> 1M </span>
+                    </label>
+                    <label class="btn btn-sm btn-info btn-simple btn-rounded" 
+                    (click)="num_days = 365;updateOptions();clicked=false;clicked2=true;clicked1=false" 
+                    [ngClass]="{'active':clicked2===true}"> 
+                    <input name="options" type="radio" />
+                    <span> 1Y </span>
+                    </label>
+                  </div>
+                </div>
+              </div>  
+            </div><!--card-header-->
+            <div class="card-body">
+              <div class="chart-area"><canvas id="stockpriceOverTime"> </canvas></div>
+            </div> <!--card body-->
+          </div> <!--card-chart-->
+        </div> <!--col-lg-6-->
+      </div> <!--row-->
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card-rounded shadow">
+            <!--<div class="card-rounded-header">
+              <h4 class="card-rounded-title" style="margin: 0.25rem;"> Exchange: </h4>
+            </div>card-rounded-header-->
+            <div class = "card-rounded-body">
+              <!--<h3 style="margin: 0.25rem;"> Exchange: </h3>-->
+              <p style="margin: 0.25rem; padding: 16px;">
+                <span style="font-weight: 600;">
+                  Net Income(per year) :
+                </span> 
+                {{ company_netIncome +" "+ stock_currency }} 
+              </p>
+            </div> <!--card-rounded-body-->
+          </div> <!--card-rounded-->
+        </div> <!--col-lg-4-->
+        <div class="col-lg-4">
+          <div class="card-rounded shadow">
+            <!--<div class="card-rounded-header">
+              <h4 class="card-rounded-title" style="margin: 0.25rem;"> Exchange: </h4>
+            </div>card-rounded-header-->
+            <div class = "card-rounded-body">
+              <!--<h3 style="margin: 0.25rem;"> Exchange: </h3>--> 
+              <p style="margin: 0.25rem; padding: 16px;">
+                <span style="font-weight: 600;">
+                  Sector :
+                </span> 
+                {{ stock_sector }} 
+              </p>
+            </div> <!--card-rounded-body-->
+          </div> <!--card-rounded-->
+        </div> <!--col-lg-4-->
+        <div class="col-lg-4">
+          <div class="card-rounded shadow">
+            <!--<div class="card-rounded-header">
+              <h4 class="card-rounded-title" style="margin: 0.25rem;"> Exchange: </h4>
+            </div>card-rounded-header-->
+            <div class = "card-rounded-body">
+              <!--<h3 style="margin: 0.25rem;"> Exchange: </h3>-->
+              <p style="margin: 0.25rem; padding: 16px;">
+                <span style="font-weight: 600;">
+                  Exchange :
+                </span> 
+                {{ stock_exchange }} 
+              </p>
+            </div> <!--card-rounded-body-->
+          </div> <!--card-rounded-->
+        </div> <!--col-lg-4-->
+        </div><!--row-->
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card shadow">
+              <div class="list-group black-font">
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  P/E Ratio:  
+                  <span>
+                    {{ PERatio }}
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  P/E/G Ratio:  
+                  <span> 
+                    {{ PEGRatio }}
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Divident Per Yield:  
+                  <span> 
+                    {{ dividend_per_share }}
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Divident Yield:
+                  <span> 
+                    {{ dividend_yield }} 
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Profit Margin: 
+                  <span>  
+                    {{ profit_margin }}
+                  </span>
+                </a>
+              </div>
+            </div><!--class="card"-->
+          </div> <!--class="col-lg-4"-->
+          <div class="col-lg-4">
+            <div class="card shadow">
+              <div class="list-group black-font">
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Depreciation: 
+                  <span *ngIf = "company_depreciation!='None'; else noDetails">
+                    {{ company_depreciation + " " + stock_currency }}
+                  </span>
+                  <span *ngIf = "company_depreciation_growth || company_depreciation==='None' ; else downArrow" >
+                    <span *ngIf = "company_depreciation==='None'; else upArrow">
+                    </span>
+                  </span>
+
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Total Revenue: 
+                  <span>
+                    {{ company_totalRevenue + " " + stock_currency }}
+                  </span>
+                  <span *ngIf = "company_totalRevenue_growth; else downArrow"> 
+                    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+                      </svg>
+                    </div>
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  R & D: 
+                  <span>
+                    {{ company_researchAndDevelopment + " " + stock_currency }}
+                  </span>
+                  <span *ngIf = "company_researchAndDevelopment_growth; else downArrow">
+                    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+                      </svg>  
+                    </div>
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Gross Profit: 
+                  <span>
+                    {{ company_grossProfit + " " + stock_currency }}
+                  </span>
+                  <span  *ngIf = "company_grossProfit_growth; else downArrow"> 
+                    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+                      </svg>
+                    </div>
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Goods sold:  
+                  <span>
+                    {{ company_goodsAndServicesSold + " " + stock_currency }}
+                  </span>
+                  <span *ngIf = "company_goodsAndServicesSold_growth; else downArrow">
+                    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+                      </svg> 
+                    </div>
+                  </span>
+                </a>
+              </div>
+            </div><!--class="card"-->
+          </div> <!--class="col-lg-4"-->
+          <div class="col-lg-4">
+            <div class="card shadow">
+              <div class="list-group black-font">
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Total Assets: 
+                  <span>
+                    {{ company_assets + " " + stock_currency }}
+                  </span>
+                  <span *ngIf = "company_assets_growth; else downArrow">
+                    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+                      </svg>
+                    </div>
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Total Liabilities : 
+                  <span>
+                    {{ company_liabilities + " " + stock_currency }}
+                  </span> 
+                  <span *ngIf = "company_liabilities_growth; else downArrow"> 
+                    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+                      </svg>
+                    </div>
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Current Debt:
+                  <span>
+                    {{ company_currentDebt+ " " + stock_currency }} 
+                  </span>
+                  <span *ngIf = "company_currentDebt_growth; else downArrow"> 
+                    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+                      </svg>
+                    </div>
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Long Term Debt:  
+                  <span>
+                    {{ company_longTermDebt+ " " + stock_currency }}
+                  </span>
+                  <span *ngIf = "company_longTermDebt_growth; else downArrow"> 
+                    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+                      </svg>
+                    </div>
+                  </span>
+                </a>
+                <a class="list-group-item d-flex justify-content-around align-items-center">
+                  Share Holder Equity: 
+                  <span>
+                    {{ company_totalShareholderEquity+ " " + stock_currency }}
+                  </span>
+                  <span *ngIf = "company_totalShareholderEquity_growth; else downArrow"> 
+                    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+                      </svg> 
+                    </div>
+                  </span>
+                </a>
+              </div>
+            </div><!--class="card"-->
+          </div> <!--class="col-lg-4"-->
+        </div><!--class="row"-->
+</div> 
+<!--
+<div class="row">
+  <div class=" col-sm-12">
+    <div class=" card">
+      <div class=" card-header">
+        <h4 class=" card-title">Display using Webscrapping</h4>
+      </div>
+      <div class=" card-body">
+        <h5 *ngIf="isWeb">Microsoft Stock Price : {{msftStockPrice}}   </h5> 
+      </div>
+      </div> 
+    </div>
+  </div><!-- row-->
+
+ 
+  <!-- Modal -->
+  <ng-template #content let-modal>
+    <div class="modal-header" >
+      <h2 class="modal-title" style="font-family: 'DM Sans'; color: darkslategray;">Company Description:</h2>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="padding-top: 0.25rem; color: #000">
+      {{ company_description }}
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </ng-template>
+
+  <ng-template #downArrow >
+    <div ngbPopover="Value decreased compared to last year!" triggers="mouseenter:mouseleave">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-file-arrow-down-fill" viewBox="0 0 16 16" >
+        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z"/>
+      </svg>
+    </div>
+  </ng-template>
+
+  <ng-template #upArrow >
+    <div ngbPopover="Value increased compared to last year!" triggers="mouseenter:mouseleave">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-arrow-up-fill" viewBox="0 0 16 16">
+        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 6.707 6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707z"/>
+      </svg>
+    </div>
+  </ng-template>
+
+  <ng-template #noDetails >
+    <span> No Info. available</span>
+  </ng-template>
+

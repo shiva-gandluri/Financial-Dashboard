@@ -1,0 +1,117 @@
+<div class="content">
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="card shadow">
+                <div class="search-bar">
+                    <ng-template #rt let-r="result" let-t="term">
+                      <!--<img [src]="'https://logo.clearbit.com/' + r['flag']" class="mr-3" style="width: 6px">-->
+                      <ngb-highlight [result]="r.Entity" [term]="t"></ngb-highlight>
+                    </ng-template>
+                    <form class="me-3">
+                        <input type="search" [(ngModel)]="country_1" name ="country_1"
+                        class="form-control" placeholder="ENTER 1ST COUNTRY" aria-label="Search" 
+                        [ngbTypeahead]="search_country" [resultTemplate]="rt" [inputFormatter]="formatter1">
+                    </form>
+                </div> <!-- search-bar-->
+            </div> <!-- card-->
+        </div><!-- col-sm-5-->
+        <div class="col-sm-1" style="padding-left: 0.2rem; padding-top: .4rem; ">
+            <button class="btn btn-rounded btn-warning shadow" (click)="swapCountries(country_1, country_2)"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                </svg>
+            </button>
+            <!--<i class="bi bi-arrow-left-right"></i>-->
+        </div> <!--col-lg-1-->
+        <div class="col-sm-5">
+            <div class="card shadow">
+                <div class="search-bar">
+                    <form class="me-3">
+                        <input type="search" [(ngModel)]="country_2" name ="country_2"
+                        class="form-control" placeholder="ENTER 2ND COUNTRY" aria-label="Search" 
+                        [ngbTypeahead]="search_country" [resultTemplate]="rt" [inputFormatter]="formatter2">
+                    </form>
+                </div> <!-- search-bar-->
+            </div> <!-- card-->
+        </div><!-- col-sm-5-->
+        <div class="col-sm-1" style="padding-left: 0.2rem; padding-top: .4rem;">
+            <button type="submit" class="btn btn-info" (click)="updatePage()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+            </button>
+        </div>
+    </div> <!-- class="row" -->
+    <div class="row">
+        <div class=" col-lg-12">
+            <div class=" card card-chart shadow">
+              <div class=" card-header">
+                <div class=" row"> 
+                  <div class=" col-sm-6 text-left">
+                    <h3 class=" card-title  text-center" style="font-family: 'DM Sans'; font-size: x-large ;">
+                      <i class=" tim-icons icon-coins text-danger-states"> 
+                      </i> 
+                      {{ symbol_1 }} to {{ symbol_2 }} Conversion :
+                    </h3>
+                  </div>
+                  <div class=" col-sm-6">
+                    <div class=" btn-group btn-group-toggle d-flex justify-content-center" data-toggle="buttons">
+                      <label class=" btn btn-sm mr-3 btn-info btn-simple btn-rounded" 
+                      (click)="num_days = 7;updateOptions();clicked=true;clicked1=false;clicked2=false" 
+                      [ngClass]="{'active':clicked===true}"> 
+                        <input checked="checked" name="options" type="radio"/>
+                        <span> 7D </span>
+                      </label>
+                      <label class="btn btn-sm mr-3 btn-info btn-simple btn-rounded" 
+                      (click)="num_days = 30;updateOptions();clicked=false;clicked1=true;clicked2=false" 
+                      [ngClass]="{'active':clicked1===true}"> 
+                        <input name="options" type="radio" />
+                        <span> 1M </span>
+                      </label>
+                      <label class="btn btn-sm btn-info btn-simple btn-rounded" 
+                      (click)="num_days = 365;updateOptions();clicked=false;clicked2=true;clicked1=false" 
+                      [ngClass]="{'active':clicked2===true}"> 
+                      <input name="options" type="radio" />
+                      <span> 1Y </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>  
+              </div><!--card-header-->
+              <div class="card-body">
+                <div class="chart-area">                  
+                    <canvas id="foreignExchangeOverTime"> 
+                    </canvas>
+                </div>
+              </div> <!--card body-->
+            </div> <!--card-chart-->
+          </div> <!--col-lg-6-->
+    </div> <!--class="row"-->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title text-center"> Currency Conversion </h2>
+          </div>
+          <div class="card-body d-flex justify-content-around">
+            <div class="input-bar col-sm-4 ">
+              <form class="form-group">
+                <label> {{ symbol_1 }} </label>
+                <input [(ngModel)]="converter_country_1" name ="converter_country_1" placeholder="ENTER VALUE"
+                class="form-control" (keyup)="convertC1C2()"> 
+              </form>
+            </div>
+            <div class="input-bar col-sm-4 ">
+              <form class="form-group">
+                <label> {{ symbol_2 }} </label>
+                <input [(ngModel)]="converter_country_2" name ="converter_country_2" placeholder="CONVERTED VALUE"
+                      class="form-control" (keyup)="convertC2C1()"> 
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!--class="row"-->
+</div> <!--end class="content"-->
+
+
