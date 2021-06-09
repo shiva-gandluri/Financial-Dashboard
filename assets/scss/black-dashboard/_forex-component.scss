@@ -1,0 +1,78 @@
+.row {
+    font-family: 'DM Sans';
+}
+
+.card-title {
+    font-size: x-large;
+	font-family: 'DM Sans';
+}
+
+
+.card {
+    .search-bar {
+		padding: -15px;
+		
+		.form-control {
+			min-height: 4rem;
+			border: 0;
+			font-size: large;
+			font-family: FontAwesome, DM Sans;
+			
+
+			@include transition-input-focus-color;
+			&:focus{
+				border-color: $green;
+				background-color: $input-bg;
+				
+				@include box-shadow(none);
+				/*
+				& + .input-group-append .input-group-text,
+				& ~ .input-group-append .input-group-text,
+				& + .input-group-prepend .input-group-text,
+				& ~ .input-group-prepend .input-group-text{
+					border: 1px solid $info;
+					border-left: none;
+					background-color: #f9f9f9;//$transparent-bg;
+				}*/
+			}
+
+			:hover {
+				background-color: #e7e7e7
+			}
+
+			.has-success &,
+			.has-error &,
+			.has-success &:focus,
+			.has-error &:focus{
+				@include box-shadow(none);
+			}
+		  
+			.has-danger &,
+			.has-success &{
+				&.form-control-success,
+				&.form-control-danger{
+					background-image: none;
+				}
+			}
+		  
+			& + .form-control-feedback{
+				border-radius: $border-radius-lg;
+				margin-top: -7px;
+				position: absolute;
+				right: 10px;
+				top: 50%;
+				vertical-align: middle;
+			}
+		  
+			.open &{
+				border-radius: $border-radius-lg $border-radius-lg 0 0;
+				border-bottom-color: $transparent-bg;
+			}
+		  
+			& + .input-group-append .input-group-text,
+			& + .input-group-prepend .input-group-text{
+				background-color: $white;
+			}
+		}
+	}
+}

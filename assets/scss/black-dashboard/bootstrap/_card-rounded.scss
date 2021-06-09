@@ -1,0 +1,298 @@
+.card-rounded {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: $card-rounded-bg;
+    background-clip: border-box;
+    border: $card-rounded-border-width solid $card-rounded-border-color;
+    @include border-radius($card-rounded-border-radius);
+  
+    > hr {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  
+    > .list-group:first-child {
+      .list-group-item:first-child {
+        @include border-top-radius($card-rounded-border-radius);
+      }
+    }
+  
+    > .list-group:last-child {
+      .list-group-item:last-child {
+        @include border-bottom-radius($card-rounded-border-radius);
+      }
+    }
+  }
+  
+  .card-rounded-body {
+    // Enable `flex-grow: 1` for decks and groups so that card blocks take up
+    // as much space as possible, ensuring footers are aligned to the bottom.
+    flex: 1 1 auto;
+    padding: $card-rounded-spacer-x;
+  }
+  
+  .card-rounded-title {
+    margin-bottom: $card-rounded-spacer-y;
+  }
+  
+  .card-rounded-subtitle {
+    margin-top: -($card-rounded-spacer-y / 2);
+    margin-bottom: 0;
+  }
+  
+  .card-rounded-text:last-child {
+    margin-bottom: 0;
+  }
+  
+  .card-rounded-link {
+    @include hover {
+      text-decoration: none;
+    }
+  
+    + .card-rounded-link {
+      margin-left: $card-rounded-spacer-x;
+    }
+  }
+  
+  //
+  // Optional textual caps
+  //
+  
+  .card-rounded-header {
+    padding: $card-rounded-spacer-y $card-rounded-spacer-x;
+    margin-bottom: 0; // Removes the default margin-bottom of <hN>
+    background-color: $card-rounded-cap-bg;
+    border-bottom: $card-rounded-border-width solid $card-rounded-border-color;
+  
+    &:first-child {
+      @include border-radius($card-rounded-inner-border-radius $card-rounded-inner-border-radius 0 0);
+    }
+  
+    + .list-group {
+      .list-group-item:first-child {
+        border-top: 0;
+      }
+    }
+  }
+  
+  .card-rounded-footer {
+    padding: $card-rounded-spacer-y $card-rounded-spacer-x;
+    background-color: $card-rounded-cap-bg;
+    border-top: $card-rounded-border-width solid $card-rounded-border-color;
+  
+    &:last-child {
+      @include border-radius(0 0 $card-rounded-inner-border-radius $card-rounded-inner-border-radius);
+    }
+  }
+  
+  
+  //
+  // Header navs
+  //
+  
+  .card-rounded-header-tabs {
+    margin-right: -($card-rounded-spacer-x / 2);
+    margin-bottom: -$card-rounded-spacer-y;
+    margin-left: -($card-rounded-spacer-x / 2);
+    border-bottom: 0;
+  }
+  
+  .card-rounded-header-pills {
+    margin-right: -($card-rounded-spacer-x / 2);
+    margin-left: -($card-rounded-spacer-x / 2);
+  }
+  
+  // Card image
+  .card-rounded-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: $card-rounded-img-overlay-padding;
+  }
+  
+  .card-rounded-img {
+    width: 100%; // Required because we use flexbox and this inherently applies align-self: stretch
+    @include border-radius($card-rounded-inner-border-radius);
+  }
+  
+  // Card image caps
+  .card-rounded-img-top {
+    width: 100%; // Required because we use flexbox and this inherently applies align-self: stretch
+    @include border-top-radius($card-rounded-inner-border-radius);
+  }
+  
+  .card-rounded-img-bottom {
+    width: 100%; // Required because we use flexbox and this inherently applies align-self: stretch
+    @include border-bottom-radius($card-rounded-inner-border-radius);
+  }
+  
+  
+  // Card deck
+  
+  .card-rounded-deck {
+    display: flex;
+    flex-direction: column;
+  
+    .card-rounded {
+      margin-bottom: $card-deck-margin;
+    }
+  
+    @include media-breakpoint-up(sm) {
+      flex-flow: row wrap;
+      margin-right: -$card-deck-margin;
+      margin-left: -$card-deck-margin;
+  
+      .card-rounded {
+        display: flex;
+        // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+        flex: 1 0 0%;
+        flex-direction: column;
+        margin-right: $card-deck-margin;
+        margin-bottom: 0; // Override the default
+        margin-left: $card-deck-margin;
+      }
+    }
+  }
+  
+  
+  //
+  // Card groups
+  //
+  
+  .card-rounded-group {
+    display: flex;
+    flex-direction: column;
+  
+    // The child selector allows nested `.card` within `.card-group`
+    // to display properly.
+    > .card-rounded {
+      margin-bottom: $card-group-margin;
+    }
+  
+    @include media-breakpoint-up(sm) {
+      flex-flow: row wrap;
+      // The child selector allows nested `.card` within `.card-group`
+      // to display properly.
+      > .card-rounded {
+        // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+        flex: 1 0 0%;
+        margin-bottom: 0;
+  
+        + .card-rounded {
+          margin-left: 0;
+          border-left: 0;
+        }
+  
+        // Handle rounded corners
+        @if $enable-rounded {
+          &:first-child {
+            @include border-right-radius(0);
+  
+            .card-rounded-img-top,
+            .card-rounded-header {
+              border-top-right-radius: 0;
+            }
+            .card-rounded-img-bottom,
+            .card-rounded-footer {
+              border-bottom-right-radius: 0;
+            }
+          }
+  
+          &:last-child {
+            @include border-left-radius(0);
+  
+            .card-rounded-img-top,
+            .card-rounded-header {
+              border-top-left-radius: 0;
+            }
+            .card-rounded-img-bottom,
+            .card-rounded-footer {
+              border-bottom-left-radius: 0;
+            }
+          }
+  
+          &:only-child {
+            @include border-radius($card-rounded-border-radius);
+  
+            .card-rounded-img-top,
+            .card-rounded-header {
+              @include border-top-radius($card-rounded-border-radius);
+            }
+            .card-rounded-img-bottom,
+            .card-rounded-footer {
+              @include border-bottom-radius($card-rounded-border-radius);
+            }
+          }
+  
+          &:not(:first-child):not(:last-child):not(:only-child) {
+            @include border-radius(0);
+  
+            .card-rounded-img-top,
+            .card-rounded-img-bottom,
+            .card-rounded-header,
+            .card-rounded-footer {
+              @include border-radius(0);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  
+  //
+  // Columns
+  //
+  
+  .card-rounded-rounded-columns {
+    .card-rounded-rounded {
+      margin-bottom: $card-rounded-columns-margin;
+    }
+  
+    @include media-breakpoint-up(sm) {
+      column-count: $card-rounded-columns-count;
+      column-gap: $card-rounded-columns-gap;
+      orphans: 1;
+      widows: 1;
+  
+      .card-rounded-rounded {
+        display: inline-block; // Don't let them vertically span multiple columns
+        width: 100%; // Don't let their width change
+      }
+    }
+  }
+  
+  
+  //
+  // Accordion
+  //
+  
+  .accordion {
+    .card-rounded:not(:first-of-type):not(:last-of-type) {
+      border-bottom: 0;
+      border-radius: 0;
+    }
+  
+    .card-rounded:not(:first-of-type) {
+      .card-rounded-header:first-child {
+        border-radius: 0;
+      }
+    }
+  
+    .card-rounded:first-of-type {
+      border-bottom: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  
+    .card-rounded:last-of-type {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+  
