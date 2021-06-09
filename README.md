@@ -14,7 +14,7 @@ I've used the following third-parties:
 
 ### Project Hosting and Demo
 
-Hosted on GitHub Pages: https://shiva-gandluri.github.io/Financial-Dashboard/
+- Hosted on GitHub Pages: https://shiva-gandluri.github.io/Financial-Dashboard/
 
 > *Note: The AlphaVantage API takes only one API call per minute. So, kindly refresh the link after a minute if you're not getting any data (or) click on the below image to go to project demo*
 > 
