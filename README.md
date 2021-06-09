@@ -12,11 +12,13 @@ I've used the following third-parties:
 - [Ng Bootstrap](https://ng-bootstrap.github.io/#/home) for the component decoration.
 - [Chartjs](https://www.chartjs.org/) for the charts.
 
-### Project Demo
+### Project Hosting and Demo
 
- > *Click on the image below to go to the project demo.*
+Hosted on GitHub Pages: https://shiva-gandluri.github.io/Financial-Dashboard/
 
- > [![PASSENGER SATISFACTION - PROJECT DEMO](https://i.imgur.com/RgG1T2x.png)](https://youtu.be/z_gGbkKiw0U)
+> *Note: The AlphaVantage API takes only one API call per minute. So, kindly refresh the link after a minute if you're not getting any data (or) click on the below image to go to project demo*
+> 
+> [![PASSENGER SATISFACTION - PROJECT DEMO](https://i.imgur.com/RgG1T2x.png)](https://youtu.be/z_gGbkKiw0U)
 
 ## Table of Contents
 
